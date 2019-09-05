@@ -1,0 +1,135 @@
+\documentclass[11pt]{article}\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+
+% These packages help with equations, math symbols, etc.
+\usepackage{amsmath,amssymb}
+% This EXCELLENT resource is your guide to writing equations in LaTeX!
+%  ftp://ftp.ams.org/pub/tex/doc/amsmath/short-math-guide.pdf
+
+\usepackage[margin=1in]{geometry} % better margins and spacing
+\setlength{\parindent}{0in} % 0 = no paragraph indentation 
+
+% For more compact numbered lists...
+\usepackage{enumitem}
+\setlist{noitemsep, topsep=-0.5em}
+
+\usepackage{multicol} % Easy columns
+
+\usepackage{graphicx} % If you want to include an image
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+% Configure some details for knitr...
+
+
+% Main text begins here:
+\textbf{\large COURSE TITLE, Homework X \hfill STUDENT NAME}  % Replace Solutions with your name.
+\vspace{1pt}
+\hrule
+~\\ % this just forces a blank line. 
+
+\textbf{1.} What is $1+1$? 
+
+$$1+1=2$$
+
+Or in R... %% This is a block of R code parsed by knitr!
+\begin{knitrout}\footnotesize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## R code to compute 1+1 (the complicated way...)}
+\hlstd{x} \hlkwb{=} \hlnum{1}
+\hlstd{y} \hlkwb{=} \hlnum{1}
+\hlstd{addtogether} \hlkwb{=} \hlkwa{function}\hlstd{(}\hlkwc{a}\hlstd{,} \hlkwc{b}\hlstd{) \{}
+    \hlkwd{return}\hlstd{(a} \hlopt{+} \hlstd{b)}
+\hlstd{\}}
+\hlkwd{addtogether}\hlstd{(x, y)}
+\end{alltt}
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+~\\
+
+\textbf{2.} Use standard, and robust regression methods to fit a linear model to these data:
+
+\begin{table}[h!]  \begin{center}
+ \begin{tabular}{c|cccccccccccccc}
+\textbf{x} & 17 & 6 & 5 & 3 & 9 & 10 & 20 & 14 & 1 & 2 & 11 & 15 & 8 & 4 \\ \hline
+\textbf{y} & 13.1& 6.3& 2.74& 5.13& 4.99& 7.86& 19.20& 18.3& 1.59& 2.11& 9.83& 16.3& 2.2& 5.02 \\
+ \end{tabular}  \end{center}
+\end{table}
+
+\begin{knitrout}\footnotesize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## R code to do the regression}
+\hlkwd{library}\hlstd{(robustbase)} \hlcom{# load for lmrob(). To install run install.packages("robustbase") in R}
+\hlcom{# See echo=... above, which hides this and the next two lines}
+\hlstd{fitrob}\hlkwb{=}\hlkwd{lmrob}\hlstd{(y}\hlopt{~}\hlstd{x)}
+\hlkwd{par}\hlstd{(}\hlkwc{mar}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlnum{4}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{1}\hlstd{),} \hlkwc{oma}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{))} \hlcom{# see echo=... above, which hides this line.}
+\hlkwd{plot}\hlstd{(x,y,}\hlkwc{pch}\hlstd{=}\hlnum{19}\hlstd{)}
+\hlkwd{abline}\hlstd{(fit,}\hlkwc{lty}\hlstd{=}\hlnum{1}\hlstd{)}
+\hlkwd{abline}\hlstd{(fitrob,}\hlkwc{lty}\hlstd{=}\hlnum{2}\hlstd{)}
+\hlkwd{legend}\hlstd{(}\hlstr{"topleft"}\hlstd{,}\hlkwd{c}\hlstd{(}\hlstr{"Simple Regression"}\hlstd{,}\hlstr{"Robust Regression"}\hlstd{),} \hlkwc{lty}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{2}\hlstd{),} \hlkwc{cex}\hlstd{=}\hlnum{0.8}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=.45\linewidth]{figure/pigprofit-1} 
+\includegraphics[width=.45\linewidth]{figure/pigprofit-2} 
+
+\end{knitrout}
+
+% For more examples, see the internet.
+\begin{center}
+\includegraphics[width=1 \textwidth]{p3p31}
+\end{center}
+
+\end{document}

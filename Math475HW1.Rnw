@@ -1,0 +1,86 @@
+\documentclass[12pt]{article}
+\usepackage[left=0.1in,right=0.1in,top=0.8in,bottom=0.1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[bookmarks=false]{hyperref}
+\usepackage{float}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textsl{Xinyu Guo (ID: 467544)}}
+\chead{\textsl{Math 475 HW 1}}
+\rhead{\textsl{Date: Sep 2nd, 2019}}
+\cfoot{\thepage}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\subsection*{Problem 1}
+<<r>>=
+grade <- sample.int(100)
+letter_g <- ifelse(grade>89, "A", ifelse(grade>79, "B", ifelse(grade>69, "C", ifelse(grade>59, "D", "F"))))
+grade[1:5]
+letter_g[1:5]
+@
+
+
+\subsection*{Problem 2}
+<<r>>=
+x <- 1:9
+names(x) <- x
+y <- 1:9
+names(y) <- y
+z <- 1:9
+names(z) <- z
+a <- outer(x, outer(y, z, "+"), "+")
+which(a == 10, arr.ind = TRUE, useNames = FALSE)
+@
+There are 36 elements in the set.
+
+
+\subsection*{Problem 3}
+\textbf{Is there any relation between the education level and the age of first coding?}
+<<r>>=
+data <- read.csv(file = "/Users/xinyuguo/Desktop/Fall 2019/Math 475/developer_survey_2019/survey_results_public.csv", header = TRUE)
+# The Age 1st Code vs. Educational Level
+ndata <- data[, c(9, 15)]
+ndata$Age1stCode <- as.numeric(ndata$Age1stCode)
+ndata <- ndata[complete.cases(ndata$Age1stCode), ]
+tapply(ndata$Age1stCode, ndata$EdLevel, mean)
+@
+\newpage
+From numbers above, it is reasonable to analyse that the younger people get in toched with coding, the higher education level they will get. From data above, the samll ages are around 11 to 12, which are corresbounding to "Associate degree", "Bachelor degree (BA, BS, B.Eng., etc.)", " Master degree (MA, MS, M.Eng., MBA, etc.)", "Secondary school (e.g. American high school, German Realschule or Gymnasium, etc.)", " Some college/university study without earning a degree". It is interesting to find that Secondary School is in this list. The reason for this interesting fast might be that most of people in this age are currently attened in the Secondary School and are pursuing higher education level. However, as for Primary/elementary school, even though there might be some students who are currently in school, the average age are still high. Also, for people who never completed any formal education, the average age is around 20. This again, confirms the hypothesis above. Moreover, the average age of "Professional degree (JD, MD, etc.)" and "Other doctoral degree (Ph.D, Ed.D., etc.)" are in the middle. This might shows the fact that pursing the highest education level is not so easy and takes long time. And when those people are young, the coding was not a kindergarten course.\\
+
+
+\textbf{How years of coding, age of first coding, working hours per week, and age affects the employment status？}
+<<r>>=
+# The factors about employment status
+edata <- data[, c(6, 14, 15, 33, 78)]
+#numeric the data
+edata$YearsCode <- as.numeric(edata$YearsCode)
+edata$Age1stCode <- as.numeric(edata$Age1stCode)
+edata$WorkWeekHrs <- as.numeric(edata$WorkWeekHrs)
+edata$Age <- as.numeric(edata$Age)
+#eliminate NAs
+edata <- edata[complete.cases(edata$YearsCode), ]
+edata <- edata[complete.cases(edata$Age1stCode), ]
+edata <- edata[complete.cases(edata$WorkWeekHrs), ]
+edata <- edata[complete.cases(edata$Age), ]
+#tapply
+tapply(edata$YearsCode, edata$Employment, mean)
+tapply(edata$Age1stCode, edata$Employment, mean)
+tapply(edata$WorkWeekHrs, edata$Employment, mean)
+tapply(edata$Age, edata$Employment, mean)
+@
+From the data above, it is not surprisingly to see that averages of "YearsCode" and "WorkWeekHrs" are higher for "Employed full-time" and "Employed part-time" than "Independent contractor, freelancer, or self-employed", Also, the average of "Age1stCod" and "Age" are smaller for "Employed full-time" and "Employed part-time" than "Independent contractor, freelancer, or self-employed". However, it is surprisingly to find that the "Age1stCode" and "Age" are smaller and the "YearsCode" is higher for "Employed part-time" than "Employed full-time". The reason for this mighe be there are increasingly number of younsters learning coding. And most of them are in the stage of life of intership or part-time job.
+
+
+
+
+
+
+
+
+\end{document}

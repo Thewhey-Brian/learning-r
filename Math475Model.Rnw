@@ -1,0 +1,75 @@
+\documentclass[11pt]{article}
+
+% These packages help with equations, math symbols, etc.
+\usepackage{amsmath,amssymb}
+% This EXCELLENT resource is your guide to writing equations in LaTeX!
+%  ftp://ftp.ams.org/pub/tex/doc/amsmath/short-math-guide.pdf
+
+\usepackage[margin=1in]{geometry} % better margins and spacing
+\setlength{\parindent}{0in} % 0 = no paragraph indentation 
+
+% For more compact numbered lists...
+\usepackage{enumitem}
+\setlist{noitemsep, topsep=-0.5em}
+
+\usepackage{multicol} % Easy columns
+
+\usepackage{graphicx} % If you want to include an image
+
+\begin{document}
+% Configure some details for knitr...
+<<setup, include=FALSE>>=
+# smaller font size for chunks
+knitr::opts_chunk$set(size = 'footnotesize', concordance=TRUE)
+@
+
+% Main text begins here:
+\textbf{\large COURSE TITLE, Homework X \hfill STUDENT NAME}  % Replace Solutions with your name.
+\vspace{1pt}
+\hrule
+~\\ % this just forces a blank line. 
+
+\textbf{1.} What is $1+1$? 
+
+$$1+1=2$$
+
+Or in R... %% This is a block of R code parsed by knitr!
+<<oneplusone, tidy=TRUE>>=	
+## R code to compute 1+1 (the complicated way...)
+x=1; y=1;
+addtogether = function(a,b) { return(a+b) }
+addtogether(x,y)
+@
+~\\
+
+\textbf{2.} Use standard, and robust regression methods to fit a linear model to these data:
+
+\begin{table}[h!]  \begin{center}
+ \begin{tabular}{c|cccccccccccccc}
+\textbf{x} & 17 & 6 & 5 & 3 & 9 & 10 & 20 & 14 & 1 & 2 & 11 & 15 & 8 & 4 \\ \hline
+\textbf{y} & 13.1& 6.3& 2.74& 5.13& 4.99& 7.86& 19.20& 18.3& 1.59& 2.11& 9.83& 16.3& 2.2& 5.02 \\
+ \end{tabular}  \end{center}
+\end{table}
+
+<<pigprofit, fig.width=4, fig.height=4, out.width='.45\\linewidth', fig.keep='high', fig.show='hold', tidy=FALSE, message=FALSE, echo=c(1,2,3,7,8,10,11,12,13)>>=	
+## R code to do the regression
+library(robustbase) # load for lmrob(). To install run install.packages("robustbase") in R
+# See echo=... above, which hides this and the next two lines
+x=c(17, 6, 5, 3, 9, 10, 20, 14, 1, 2, 11, 15, 8, 4)
+y=c(4.9, 6.3, 2.74, 5.13, 4.99, 7.86, 19.2, 18.3, 1.59, 2.11, 9.83, 16.3, 2.2, 5.02)
+fit=lm(y~x)
+fitrob=lmrob(y~x)
+par(mar=c(4,4,2,1), oma=c(0,0,0,0)) # see echo=... above, which hides this line.
+scatter.smooth(x,y, pch=19)
+plot(x,y,pch=19)
+abline(fit,lty=1)
+abline(fitrob,lty=2)
+legend("topleft",c("Simple Regression","Robust Regression"), lty=c(1,2), cex=0.8)
+@
+
+% For more examples, see the internet.
+\begin{center}
+\includegraphics[width=1 \textwidth]{p3p31}
+\end{center}
+
+\end{document}
